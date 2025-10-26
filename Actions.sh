@@ -19,3 +19,15 @@ if ! command -v shellcheck >/dev/null; then #checks if shellcheck is present
             fi
         done
 fi
+
+# YAML
+if ! command -v yamllint >/dev/null; then #checks if shellcheck is present
+    echo "You are missing the yamllint dependency"
+     else
+        for yaml_file in *.yaml;do
+            if yamllint "$yaml_file";then 
+                 echo "$yaml_file Syntax ✅"
+                else echo "$yaml_file Syntax ❌ "
+            fi
+        done
+fi
