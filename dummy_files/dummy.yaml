@@ -1,4 +1,5 @@
 # Example YAML configuration
+---
 version: 1.0
 
 app:

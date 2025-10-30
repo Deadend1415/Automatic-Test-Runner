@@ -1,47 +1,50 @@
 #!/bin/bash
 echo "🧪 Running pre-commit checks..."
-#Syntax tests
-#   Python
-for python_file in *.py;do
-    if python3 -m py_compile "$python_file";then 
-        echo "$python_file Syntax ✅"
-        else echo "$python_file Syntax ❌ "
+
+shopt -s nullglob #loop just skips instead of processing a literal *.sh
+
+DIR=dummy_files #directory where the files to be tested are located
+
+#Verificatin Function
+verify() {
+  local filetype=$1
+  local command=$2
+  for file in $DIR/*$filetype; do 
+    if eval "$command \"$file\"";then 
+        echo "$file Syntax ✅"
+     else echo "$file Syntax ❌ "
     fi
 done
+}
+
+#Syntax tests
+#   Python
+verify .py "python3 -m py_compile"
+
 #   Bash
 if ! command -v shellcheck >/dev/null; then #checks if shellcheck is present
     echo "You are missing the shellcheck dependency"
     else
-        for bash_script in *.sh;do
-            if shellcheck --enable=SC2154 "$bash_script";then 
-                 echo "$bash_script Syntax ✅"
-                else echo "$bash_script Syntax ❌ "
-            fi
-        done
+        verify .sh "shellcheck --enable=SC2154"
 fi
 
 # YAML
-if ! command -v yamllint >/dev/null; then #checks if shellcheck is present
+if ! command -v yamllint >/dev/null; then #checks if yamlint is present
     echo "You are missing the yamllint dependency"
      else
-        for yaml_file in *.yaml;do
-            if yamllint "$yaml_file";then 
-                 echo "$yaml_file Syntax ✅"
-                else echo "$yaml_file Syntax ❌ "
-            fi
-        done
+        verify .yaml "yamllint"    
 fi
+
 #   PHP
-for php in *.php;do
-    if php -l "$php" >/dev/null;then 
-        echo "$php Syntax ✅"
-        else echo "$php Syntax ❌ "
-    fi
-done
+if ! command -v php >/dev/null; then #checks if php is present
+    echo "You are missing the php dependency"
+     else
+        verify .php 'php -l >/dev/null'    
+fi
+
 #   JavaScript
-for js in *.js;do
-    if node --check "$js" >/dev/null;then 
-        echo "$js Syntax ✅"
-        else echo "$js Syntax ❌ "
-    fi
-done
+if ! command -v node >/dev/null; then #checks if node is present
+    echo "You are missing the node dependency"
+     else
+        verify .js "node --check"    
+fi
