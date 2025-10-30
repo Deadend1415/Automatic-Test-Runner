@@ -13,7 +13,7 @@ if ! command -v shellcheck >/dev/null; then #checks if shellcheck is present
     echo "You are missing the shellcheck dependency"
     else
         for bash_script in *.sh;do
-            if shellcheck "$bash_script";then 
+            if shellcheck --enable=SC2154 "$bash_script";then 
                  echo "$bash_script Syntax ✅"
                 else echo "$bash_script Syntax ❌ "
             fi
@@ -36,5 +36,12 @@ for php in *.php;do
     if php -l "$php" >/dev/null;then 
         echo "$php Syntax ✅"
         else echo "$php Syntax ❌ "
+    fi
+done
+#   JavaScript
+for js in *.js;do
+    if node --check "$js" >/dev/null;then 
+        echo "$js Syntax ✅"
+        else echo "$js Syntax ❌ "
     fi
 done
