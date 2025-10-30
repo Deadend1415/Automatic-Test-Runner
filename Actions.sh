@@ -31,3 +31,10 @@ if ! command -v yamllint >/dev/null; then #checks if shellcheck is present
             fi
         done
 fi
+#   PHP
+for php in *.php;do
+    if php -l "$php" >/dev/null;then 
+        echo "$php Syntax ✅"
+        else echo "$php Syntax ❌ "
+    fi
+done
