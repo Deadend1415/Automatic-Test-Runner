@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "🧪 Running pre-commit checks..."
 
-shopt -s nullglob #loop just skips instead of processing a literal *.sh
+shopt -s nullglob #loops just skips instead of processing a literal *.sh
 
 DIR=dummy_files #directory where the files to be tested are located
 
