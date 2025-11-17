@@ -1,9 +1,8 @@
 #!/bin/bash
-ROOT_HOOKS="../.git/hooks"
 read -rp "Do you want to install the git hooks? (Y/n): " choice
 choice=${choice:-Y}
 if [[ "$choice" == [Yy] ]]; then
-  cp pre-commit $ROOT_HOOKS
+  cp ATR-hooks/pre-commit .git/hooks/pre-commit
   echo "Hook placed"
   else echo "Operation Aborted"
 fi
